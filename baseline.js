@@ -12,14 +12,15 @@ export function setup() {
   document.body.appendChild(poseStats.dom);
   poseStats.dom.style.left = "80px";
 
-  window.addEventListener("storage", event => {
-    if (event.key === "posenet") {
-      select("#status").hide();
-      poseStats.begin();
-      latestPoses = JSON.parse(event.newValue);
-      poseStats.end();
-    }
+  let video = select("video") || createCapture(VIDEO);
+  video.size(width, height);
+  const poseNet = ml5.poseNet(video, () => select("#status").hide());
+  poseNet.on("pose", poses => {
+    poseStats.begin();
+    latestPoses = poses;
+    poseStats.end();
   });
+  video.hide();
 }
 
 export function draw() {
@@ -30,8 +31,7 @@ export function draw() {
   }
   stats.end();
 }
-
-export function drawPoses(poses) {
+function drawPoses(poses) {
   translate(width, 0);
   scale(-1.0, 1.0);
   drawKeypoints(poses);

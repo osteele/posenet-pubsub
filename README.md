@@ -3,15 +3,6 @@
 This code allows you to run an animation that receives data from PoseNet, at a
 higher frame rate than PoseNet itself.
 
-It works by running PoseNet in one web page (the “publisher”), that uses
-[localStorage
-API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) to
-publish data to another web page (the “subscriber”) that is running at a higher
-frame rate. This enables smoother animation of elements that are not directly
-fixed to the PoseNet positions.
-
-The
-
 ## Demo
 
 Run [Live
@@ -19,6 +10,10 @@ Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServe
 in (Visual Studio Code) or `python3 -m http.server`. Open `index.html`. This
 opens the subscriber, with the publisher running in a hidden iframe within the
 page.
+
+The demo uses [stats.js](http://mrdoob.github.io/stats.js/) to display the
+animation request frame rate (on the left), and the PoseNet frame rate (on the
+right).
 
 The publisher and subscriber can also be opened in separate pages. For this to
 work, the they must be each be open in a separate _window_ (not a separate tab
@@ -54,22 +49,32 @@ elsewhere in your code, for example in a p5.js draw function.
 
 ## How it Works
 
-`publisher.html` stores the PoseNet data in
+`publisher.js` (run by `publisher.html`) stores the PoseNet data in
 [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 
-`subscriber.html` subscribes to `localStorage`.
+`subscriber.js` subscribes to `localStorage`.
+
+`indesx.html` runs the code in `publisher.js` by including `publisher.html` in
+an HTML iframe. This allows the viewer to run all the required code in a single
+web page, and also to run this web page in full screen modem, without the
+publisher page needing to be visible.
 
 ## Timings
 
 On my 2019 15" MacBook Pro, `publisher.html` runs at 20 frames per second (fps).
 (It runs as slowly as 5fps on an older or less powerful computer.)
 
-`subscriber.html` runs at 60fps on the same computer, with `publisher.html`
-running at the same time. It’s only getting new PoseNet data at 20fps, but since
-it’s running the animations at 60fps they can look smooth.
+`baseline.html`runs PoseNet and at 13fps and `requestAnimationFrame` at 27fps.
 
-The same result could presumably be achieved by moving poseNet to a web worker.
-As of late 2019 this was not possible.
+`subscriber.html` runs at 60fps, with `publisher.html` running at the same time.
+It’s only getting new PoseNet data at 20fps, but since it’s running the
+animations at 60fps they can look smooth.
+
+## Other Approaches
+
+The same result could be achieved by running PoseNet in a web worker. See [tfjs
+issue #102](https://github.com/tensorflow/tfjs/issues/102) for more information
+about this.
 
 ## License
 
