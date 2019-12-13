@@ -7,8 +7,8 @@ export function setup() {
   stats.showPanel(0);
   document.body.appendChild(stats.dom);
 
-  window.addEventListener('storage', (event) => {
-    if (event.key === 'posenet') {
+  window.addEventListener("storage", event => {
+    if (event.key === "posenet") {
       select("#status").hide();
       latestPoses = JSON.parse(event.newValue);
     }

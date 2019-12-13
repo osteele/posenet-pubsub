@@ -19,7 +19,7 @@ function drawPoses(poses) {
   translate(width, 0);
   scale(-1.0, 1.0);
   image(video, 0, 0, video.width, video.height);
-  localStorage['posenet'] = JSON.stringify(poses);
+  localStorage["posenet"] = JSON.stringify(poses);
   drawKeypoints(poses);
   drawSkeleton(poses);
   pop();
