@@ -11,6 +11,8 @@ in (Visual Studio Code) or `python3 -m http.server`. Open `index.html`. This
 opens the subscriber, with the publisher running in a hidden iframe within the
 page.
 
+You can also view this demo at <https://osteele.github.io/posenet-pubsub/>.
+
 The demo uses [stats.js](http://mrdoob.github.io/stats.js/) to display the
 animation request frame rate (on the left), and the PoseNet frame rate (on the
 right).
