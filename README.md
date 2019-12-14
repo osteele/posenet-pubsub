@@ -20,7 +20,7 @@ right).
 The publisher and subscriber can also be opened in separate pages. For this to
 work, the they must be each be open in a separate _window_ (not a separate tab
 in the _same_ window). You can place the publisher window behind the subscriber
-window, but it can't be in a separate workspadce and the subscriber can't be
+window, but it can't be in a separate workspace and the subscriber can't be
 full screen.
 
 ## Usage
