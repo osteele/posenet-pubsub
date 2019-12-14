@@ -1,27 +1,31 @@
 # PoseNet PubSub
 
-This code allows you to run an animation that receives data from PoseNet, at a
-higher frame rate than PoseNet itself.
+This code demonstrates running animation code (via
+[window.requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame),
+or p5.js [draw](https://p5js.org/reference/#/p5/draw)) in one page, that
+subscribes to
+[PoseNet](https://www.tensorflow.org/lite/models/pose_estimation/overview) data
+from a program that is running in another page.
+
+This technique allows the animation code to run at a higher framerate than is
+possible when PoseNet is running in the same page.
 
 ## Demo
 
-Run [Live
-Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
-in (Visual Studio Code) or `python3 -m http.server`. Open `index.html`. This
-opens the subscriber, with the publisher running in a hidden iframe within the
-page.
+A demo is available at <https://osteele.github.io/posenet-pubsub/>.
 
-You can also view this demo at <https://osteele.github.io/posenet-pubsub/>.
+To run it locally, serve `index.html` from this directory. For example, run the [Live
+Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
+extension in Visual Studio Code, or `python3 -m http.server` from the terminal.
 
 The demo uses [stats.js](http://mrdoob.github.io/stats.js/) to display the
-animation request frame rate (on the left), and the PoseNet frame rate (on the
-right).
+animation frame rate (on the left), and the PoseNet frame rate (on the right).
 
 The publisher and subscriber can also be opened in separate pages. For this to
 work, the they must be each be open in a separate _window_ (not a separate tab
-in the _same_ window). You can place the publisher window behind the subscriber
-window, but it can't be in a separate workspace and the subscriber can't be
-full screen.
+in the _same_ window), and the publisher must be visible – it can be placed
+behind the subscriber window, but it can't be in a separate macOS workspace, and
+the subscriber page can't be full screen.
 
 ## Usage
 
@@ -66,7 +70,8 @@ publisher page needing to be visible.
 On my 2019 15" MacBook Pro, `publisher.html` runs at 20 frames per second (fps).
 (It runs as slowly as 5fps on an older or less powerful computer.)
 
-`baseline.html`runs PoseNet and at 13fps and `requestAnimationFrame` at 27fps.
+For comparison, `baseline.html` runs PoseNet and at 13fps and
+`requestAnimationFrame` at 27fps.
 
 `subscriber.html` runs at 60fps, with `publisher.html` running at the same time.
 It’s only getting new PoseNet data at 20fps, but since it’s running the
